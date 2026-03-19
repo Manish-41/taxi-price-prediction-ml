@@ -1,54 +1,35 @@
-# =========================
 # 1. Import Libraries
-# =========================
-
 import pandas as pd
 import numpy as np
-
 # Visualization
 import matplotlib.pyplot as plt
 import seaborn as sns
-
 # Sklearn - preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-
 # Models
 from sklearn.ensemble import RandomForestRegressor
-
 # Evaluation
 from sklearn.metrics import mean_squared_error, r2_score
-
 # Save model
 import joblib
-
 # Ignore warnings
 import warnings
 warnings.filterwarnings("ignore")
 
-# =========================
 # 2. Load Dataset
-# =========================
 
 df = pd.read_csv("C:/Users/manis/OneDrive/Desktop/taxi project/data/taxipricing.csv")
 
 print(df.head())
 print(df.info())
-
-
-
-# =========================
 # 3. Basic Data Analysis
-# =========================
 
 print("\nShape of dataset:", df.shape)
-
 print("\nColumns:")
 print(df.columns)
-
 print("\nMissing Values:")
 print(df.isnull().sum())
-
 print("\nStatistical Summary:")
 print(df.describe())
 
@@ -79,34 +60,24 @@ y = df[target_column]
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
-
-# =========================
 # 4. Correlation Heatmap
-# =========================
-
 plt.figure(figsize=(10, 6))
 sns.heatmap(df.corr(), annot=True, cmap="coolwarm")
 plt.title("Correlation Heatmap")
 plt.show()
 
-# =========================
 # 5. Distribution Plots
-# =========================
 
 df.hist(figsize=(12, 10))
 plt.show()
 
-# =========================
 # 6. Boxplots
-# =========================
-
 for col in num_cols:
     plt.figure()
     sns.boxplot(x=df[col])
     plt.title(f"Boxplot of {col}")
     plt.show()
-
-# =========================
+    
 # 7. Target Variable Distribution
 # =========================
 
@@ -115,9 +86,7 @@ sns.histplot(y, kde=True)
 plt.title("Target Variable Distribution")
 plt.show()
 
-# =========================
 # 8. Feature vs Target
-# =========================
 
 for col in X.columns:
     plt.figure()
@@ -126,64 +95,44 @@ for col in X.columns:
     plt.show()
 
 import pandas as pd
-
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-
 import joblib
-
 # Import our preprocessing function
 from src.data_preprocessing import preprocess_data
-
-
-# =========================
 # 1. Load Dataset
-# =========================
 df = pd.read_csv("C:/Users/manis/OneDrive/Desktop/taxi project/data/taxipricing.csv")
 
-# =========================
 # 2. Preprocess Data
-# =========================
 X, y = preprocess_data(df, target_column="target_column")
 
-# =========================
 # 3. Train-Test Split
-# =========================
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# =========================
 # 4. Train Model
-# =========================
 model = RandomForestRegressor(n_estimators=100, random_state=42)
 
 model.fit(X_train, y_train)
 
-# =========================
 # 5. Predictions
-# =========================
+
 y_pred = model.predict(X_test)
 
-# =========================
 # 6. Evaluation
-# =========================
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
 print("MSE:", mse)
 print("R2 Score:", r2)
 
-# =========================
+
 # 7. Save Model
-# =========================
+
 joblib.dump(model, "models/model.pkl")
-
 print("Model saved successfully!")
-
-
-
 
 
 
