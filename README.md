@@ -54,4 +54,13 @@ The system includes data preprocessing, model training, and an interactive dashb
 
 ---
 
-## 📂 Project Structure
+## Project Structure
+taxi-price-prediction/
+│
+├── app/ # Streamlit app
+├── src/ # Training scripts
+├── models/ # Saved model files
+├── data/ # Dataset
+├── notebooks/ # EDA notebooks
+├── requirements.txt
+└── README.md
