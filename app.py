@@ -3,19 +3,14 @@ import pandas as pd
 import joblib
 
 st.set_page_config(page_title="New York Taxi Price Predictor", layout="wide")
-
-# =========================
 # Load model & columns
-# =========================
 model = joblib.load("models/model.pkl")
 columns = joblib.load("models/columns.pkl")
 
 st.title("🚖 Taxi Price Prediction Dashboard")
 st.markdown("### Predict fare based on trip details")
 
-# =========================
 # Sidebar Inputs
-# =========================
 st.sidebar.header("📥 Enter Trip Details")
 
 trip_distance = st.sidebar.slider("Trip Distance (km)", 0.0, 50.0, 5.0)
@@ -31,9 +26,7 @@ day_of_week = st.sidebar.selectbox("Day of Week", ["Monday", "Tuesday", "Wednesd
 traffic = st.sidebar.selectbox("Traffic Conditions", ["Low", "Medium", "High"])
 weather = st.sidebar.selectbox("Weather", ["Clear", "Rainy", "Foggy", "Snowy"])
 
-# =========================
 # Create Input Data
-# =========================
 input_dict = {
     "Trip_Distance_km": trip_distance,
     "Passenger_Count": passenger_count,
@@ -51,14 +44,10 @@ input_df = pd.DataFrame([input_dict])
 input_encoded = pd.get_dummies(input_df)
 input_encoded = input_encoded.reindex(columns=columns, fill_value=0)
 
-# =========================
 # Layout Columns
-# =========================
-col1, col2 = st.columns(2)
 
-# =========================
+col1, col2 = st.columns(2)
 # Prediction Section
-# =========================
 with col1:
     st.subheader("📊 Prediction")
 
@@ -66,17 +55,12 @@ with col1:
         prediction = model.predict(input_encoded)[0]
 
         st.metric(label="💰 Estimated Price", value=f"₹ {prediction:.2f}")
-
-# =========================
 # Input Data Preview
-# =========================
 with col2:
     st.subheader("📋 Input Summary")
     st.dataframe(input_df)
-
-# =========================
 # Simple Insights Section
-# =========================
+
 st.subheader("📈 Quick Insights")
 
 # Example calculations
@@ -89,9 +73,6 @@ col4.metric("Distance Cost", f"$ {trip_distance * per_km_rate:.2f}")
 col5.metric("Time Cost", f"$ {trip_duration * per_minute_rate:.2f}")
 
 st.info(f"📌 Approximate calculated fare (without ML): $ {estimated_cost:.2f}")
-
-# =========================
 # Footer
-# =========================
 st.markdown("---")
 st.markdown("Built by Manish 🚀 | ML Project")
