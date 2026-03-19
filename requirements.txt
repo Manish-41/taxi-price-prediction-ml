@@ -3,4 +3,4 @@ numpy
 scikit-learn
 streamlit
 joblib
-altair
+altair.vegalite.v4
